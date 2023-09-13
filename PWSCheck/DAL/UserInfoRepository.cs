@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PWSCheck.DAL
@@ -49,7 +50,7 @@ namespace PWSCheck.DAL
                 {
                     return;
                 }
-                var ulist = isInValidList.Select(x => x.UserId).ToArray(); 
+                var ulist = isInValidList.Select(x => x.UserId).Where(x=> Regex.IsMatch(x, @"^[0-9]+$")).ToArray(); 
                 sqlcmd = string.Format(@"delete from MailTime_Record where USER_ID NOT IN ({0})",string.Join(",",ulist));
                 conn.Query(sqlcmd);
             }
