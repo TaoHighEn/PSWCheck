@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSWCheck", "PWSCheck\PSWCheck.csproj", "{D9044ACD-8E1E-4936-9977-4390CBBF6AA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProPswValid48", "WebProPswValid48\WebProPswValid48.csproj", "{8DEEFFB2-A8FC-48A3-9380-D09A9C31DD05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9044ACD-8E1E-4936-9977-4390CBBF6AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9044ACD-8E1E-4936-9977-4390CBBF6AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9044ACD-8E1E-4936-9977-4390CBBF6AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9044ACD-8E1E-4936-9977-4390CBBF6AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DEEFFB2-A8FC-48A3-9380-D09A9C31DD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DEEFFB2-A8FC-48A3-9380-D09A9C31DD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DEEFFB2-A8FC-48A3-9380-D09A9C31DD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DEEFFB2-A8FC-48A3-9380-D09A9C31DD05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6227C82E-F3F5-4FB8-9E7D-D280A1533B37}
+	EndGlobalSection
+EndGlobal
