@@ -23,17 +23,19 @@ namespace PWSCheck.DAL
      CASE  WHEN a.pa_no IS NULL
 	 THEN b.cu_sale 
 	 ELSE a.pa_no END  AS UserId,
+	 a.pa_oudat ,
 	 b.pr_fname UserName,
      b.pr_psword Password,
      d.[EMAIL] UserMail,
-     e.MAILTIME MailTime 
+     e.MAILTIME MailTime
      FROM iess01h b
 	 Left join iepa00h a on a.pa_no = b.pr_name
 	 Left join iepb03h c on a.pa_no = c.cu_sale
 	 Left Join [10.10.16.13\WFSQLSERVER].[UOF].[dbo].[TB_EB_USER] d on d.ACCOUNT COLLATE Chinese_Taiwan_Stroke_CI_AS = a.pa_no OR d.[NAME] COLLATE Chinese_Taiwan_Stroke_CI_AS = b.pr_fname
      Left Join MailTime_Record e on e.[USER_ID] = a.pa_no
 	 where (c.pa_id2 =1  OR c.pa_id2 is NULL) AND
-	  d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇')");
+	 a.pa_oudat =''or a.pa_oudat is null and
+	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇')");
             return conn.Query<User>(sqlcmd).ToList();
         }
         /// <summary>
@@ -50,8 +52,8 @@ namespace PWSCheck.DAL
                 {
                     return;
                 }
-                var ulist = isInValidList.Select(x => x.UserId).Where(x=> Regex.IsMatch(x, @"^[0-9]+$")).ToArray(); 
-                sqlcmd = string.Format(@"delete from MailTime_Record where USER_ID NOT IN ({0})",string.Join(",",ulist));
+                var ulist = isInValidList.Select(x => x.UserId).ToArray(); 
+                sqlcmd = string.Format(@"delete from MailTime_Record where USER_ID NOT IN ('{0}')",string.Join("','",ulist));
                 conn.Query(sqlcmd);
             }
             catch (Exception ex)
@@ -71,7 +73,7 @@ namespace PWSCheck.DAL
                 string sqlcmd = string.Empty;
                 if (user.MailTime == 0)
                 {
-                    sqlcmd = string.Format("insert into MailTime_Record values ({0},1,GETDATE())",user.UserId);
+                    sqlcmd = string.Format("insert into MailTime_Record values ('{0}',1,GETDATE())",user.UserId);
                     conn.Query(sqlcmd);
                 }
                 else
