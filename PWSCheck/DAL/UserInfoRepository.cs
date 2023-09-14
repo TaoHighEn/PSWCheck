@@ -23,7 +23,6 @@ namespace PWSCheck.DAL
      CASE  WHEN a.pa_no IS NULL
 	 THEN b.cu_sale 
 	 ELSE a.pa_no END  AS UserId,
-	 a.pa_oudat ,
 	 b.pr_fname UserName,
      b.pr_psword Password,
      d.[EMAIL] UserMail,
