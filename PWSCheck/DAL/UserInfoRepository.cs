@@ -67,6 +67,20 @@ namespace PWSCheck.DAL
                 throw new Exception(ex.Message);
             }
         }
+
+        internal void UpdateUserPsw(SqlConnection conn, User user, string password)
+        {
+            try 
+            {
+                string sqlcmd = string.Format(@"Update iess01h set pr_psword = '{0}' Where pr_name = '{1}'", password, user.UserId);
+                conn.Query(sqlcmd);
+            }
+            catch(Exception ex) 
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         /// <summary>
         /// Update Mail Time From Record Table
         /// </summary>

@@ -44,7 +44,7 @@ namespace PWSCheck.BLL
                     //Mail To User
                     foreach (User user in IsInValidList)
                     {
-                        MailTo(user);
+                        MailTo(user,conn);
                         this.UpdateUserRecord(conn,user);
                     }
                 }
@@ -64,13 +64,13 @@ namespace PWSCheck.BLL
             userInfoRepository.UpdateRecordList(conn, isInValidList);
         }
 
-        private void MailTo(User user)
+        private void MailTo(User user,SqlConnection conn)
         {
             try
             {
                 SmtpClient MySMTP = new System.Net.Mail.SmtpClient("192.168.0.19");
                 MySMTP.Credentials = new NetworkCredential("itadmin", "A1@345b");
-                MySMTP.Send(Mail(user));
+                MySMTP.Send(Mail(user,conn));
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace PWSCheck.BLL
         /// <param name="user">User Info</param>
         /// <returns>Mail Info</returns>
         /// <exception cref="Exception"></exception>
-        private MailMessage Mail(User user)
+        private MailMessage Mail(User user,SqlConnection conn)
         {
 
             MailMessage message = new MailMessage();
@@ -127,6 +127,7 @@ namespace PWSCheck.BLL
                 else
                 {
                     string password = new WebProPswValid48.PswValid().GenNewPsw(8, 20);
+                    new UserInfoRepository().UpdateUserPsw(conn, user, password);
                     body = string.Format(@"敬愛的衛普同仁 {0}您好：\n\n
                             ERP複雜性密碼提醒已超過3次，系統已將您的ERP密碼修改；\n
                             新密碼：{1}，請盡速登入ERP修改密碼。", user.UserName, password);
