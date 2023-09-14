@@ -104,7 +104,7 @@ namespace PWSCheck.DAL
                 }
                 else
                 {
-                    sqlcmd = string.Format("update MailTime_Record set MAILTIME = {0} Where USER_ID = '{0}'", user.MailTime + 1,user.UserId);
+                    sqlcmd = string.Format("update MailTime_Record set MAILTIME = {0} Where USER_ID = '{1}'", user.MailTime + 1,user.UserId);
                     conn.Query(sqlcmd);
                 }
             }
