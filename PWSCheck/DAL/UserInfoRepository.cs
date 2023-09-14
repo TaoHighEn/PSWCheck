@@ -34,7 +34,7 @@ namespace PWSCheck.DAL
 	 Left Join [10.10.16.13\WFSQLSERVER].[UOF].[dbo].[TB_EB_USER] d on d.ACCOUNT COLLATE Chinese_Taiwan_Stroke_CI_AS = a.pa_no OR d.[NAME] COLLATE Chinese_Taiwan_Stroke_CI_AS = b.pr_fname
      Left Join MailTime_Record e on e.[USER_ID] = a.pa_no
 	 where (c.pa_id2 =1  OR c.pa_id2 is NULL) AND
-	 a.pa_oudat =''or a.pa_oudat is null and
+	 (a.pa_oudat =''or a.pa_oudat is null) and
 	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇')");
             return conn.Query<User>(sqlcmd).ToList();
         }
