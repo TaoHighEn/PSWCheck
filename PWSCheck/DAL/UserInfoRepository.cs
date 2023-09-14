@@ -35,7 +35,7 @@ namespace PWSCheck.DAL
      Left Join MailTime_Record e on e.[USER_ID] = a.pa_no
 	 where (c.pa_id2 =1  OR c.pa_id2 is NULL) AND
 	 (a.pa_oudat =''or a.pa_oudat is null) and
-	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇') AND a.pa_no = '1120603'");
+	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇')");
             return conn.Query<User>(sqlcmd).ToList();
         }
 

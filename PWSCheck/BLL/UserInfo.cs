@@ -51,6 +51,7 @@ namespace PWSCheck.BLL
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
             }
         }
         /// <summary>
