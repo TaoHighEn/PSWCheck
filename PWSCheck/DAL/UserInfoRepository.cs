@@ -38,6 +38,12 @@ namespace PWSCheck.DAL
 	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇')");
             return conn.Query<User>(sqlcmd).ToList();
         }
+
+        internal void Log(SqlConnection conn, string sqlcmd)
+        {
+            conn.Execute(sqlcmd);
+        }
+
         /// <summary>
         /// InValid Psw Account Record List Update
         /// </summary>

@@ -17,10 +17,14 @@ namespace PWSCheck.BLL
         /// <param name="message">Message Need To Log</param>
         internal void Log(string message)
         {
-            string sqlcmd = string.Format(
-                            @"INSERT INTO CommonLogList (GUID,LogMessage,CreatTime,AlertStatus) values ('{0}','{1}',GETDate(),1)",
-                            Guid.NewGuid().ToString(), message
-                            );
+            using (var conn = new SqlConnection("Data Source=10.0.1.15;Initial Catalog='wpap1';Persist Security Info=True;User ID=iemis;Password=ooooo"))
+            {
+                string sqlcmd = string.Format(
+                                @"INSERT INTO CommonLogList (GUID,LogMessage,CreatTime,AlertStatus) values ('{0}','{1}',GETDate(),1)",
+                                Guid.NewGuid().ToString(), message
+                                );
+                new UserInfoRepository().Log(conn,sqlcmd);
+            }
         }
         /// <summary>
         /// Execute Start
