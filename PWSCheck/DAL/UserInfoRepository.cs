@@ -35,7 +35,7 @@ namespace PWSCheck.DAL
      Left Join MailTime_Record e on e.[USER_ID] = a.pa_no
 	 where (c.pa_id2 =1  OR c.pa_id2 is NULL) AND
 	 (a.pa_oudat =''or a.pa_oudat is null) and
-	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇')");
+	 d.[EMAIL] is not NULL and (a.dp_no='I0100' or pr_fname = '馬恩奇') AND a.pa_no = '1120603'");
             return conn.Query<User>(sqlcmd).ToList();
         }
 
@@ -72,8 +72,12 @@ namespace PWSCheck.DAL
         {
             try 
             {
-                string sqlcmd = string.Format(@"Update iess01h set pr_psword = '{0}' Where pr_name = '{1}'", password, user.UserId);
-                conn.Query(sqlcmd);
+                string UserId = user.UserId;
+                string sqlcmd = "Update iess01h set pr_psword = @password Where pr_name = @UserId";
+                SqlCommand command = new SqlCommand(sqlcmd,conn);
+                command.Parameters.AddWithValue("@password",password);
+                command.Parameters.AddWithValue("@UserId",UserId);
+                command.ExecuteNonQuery();
             }
             catch(Exception ex) 
             {

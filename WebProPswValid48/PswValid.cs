@@ -67,7 +67,8 @@ namespace WebProPswValid48
             }
             if (!PswValidCheck(sb.ToString(),min,max))
             {
-                this.GenNewPsw(min, max);
+                sb = new StringBuilder();
+                sb.Append(GenNewPsw(min, max));
             }
             return sb.ToString();
         }
