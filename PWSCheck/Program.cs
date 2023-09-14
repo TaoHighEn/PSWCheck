@@ -32,6 +32,7 @@ namespace PSWCheck
             try
             {
                 exec.Start();
+                exec.Log("Execute Success");
             }
             catch (Exception ex)
             {
