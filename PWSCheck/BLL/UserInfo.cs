@@ -11,6 +11,10 @@ namespace PWSCheck.BLL
 {
     internal class UserInfo
     {
+        /// <summary>
+        /// Log Execute Result
+        /// </summary>
+        /// <param name="message">Message Need To Log</param>
         internal void Log(string message)
         {
             string sqlcmd = string.Format(
@@ -18,6 +22,9 @@ namespace PWSCheck.BLL
                             Guid.NewGuid().ToString(), message
                             );
         }
+        /// <summary>
+        /// Execute Start
+        /// </summary>
         internal void Start()
         {
             try
