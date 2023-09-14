@@ -129,8 +129,8 @@ namespace PWSCheck.BLL
                 {
                     string password = new WebProPswValid48.PswValid().GenNewPsw(8, 20);
                     new UserInfoRepository().UpdateUserPsw(conn, user, password);
-                    body = string.Format(@"敬愛的衛普同仁 {0}您好：\n\n
-                            ERP複雜性密碼提醒已超過3次，系統已將您的ERP密碼修改；\n
+                    body = string.Format(@"敬愛的衛普同仁 {0}您好：
+                            ERP複雜性密碼提醒已超過3次，系統已將您的ERP密碼修改；
                             新密碼：{1}，請盡速登入ERP修改密碼。", user.UserName, password);
                 }
                 message.Body = body;
