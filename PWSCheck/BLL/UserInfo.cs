@@ -115,7 +115,7 @@ namespace PWSCheck.BLL
             {
                 string body = string.Empty;
 
-                if (user.MailTime <= 3)
+                if (user.MailTime < 3)
                 {
                     body = string.Format(@"敬愛的衛普同仁 {0}您好：
                             您所使用的ERP密碼不符合密碼複雜度規範，請盡速進行修改！ 
