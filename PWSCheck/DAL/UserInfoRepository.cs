@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using PWSCheck.BLL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -58,10 +59,13 @@ namespace PWSCheck.DAL
                 string sqlcmd = string.Empty;
                 if (isInValidList.Count == 0)
                 {
-                    return;
+                    sqlcmd = string.Format(@"DELETE FROM MailTime_Record");
                 }
-                var ulist = isInValidList.Select(x => x.UserId).ToArray(); 
-                sqlcmd = string.Format(@"delete from MailTime_Record where USER_ID NOT IN ('{0}')",string.Join("','",ulist));
+                else
+                {
+                    var ulist = isInValidList.Select(x => x.UserId).ToArray();
+                    sqlcmd = string.Format(@"DELETE FROM MailTime_Record WHERE USER_ID NOT IN ('{0}')", string.Join("','", ulist));
+                }
                 conn.Query(sqlcmd);
             }
             catch (Exception ex)

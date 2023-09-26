@@ -23,7 +23,7 @@ namespace WebProPswValid48
             StringBuilder sb = new StringBuilder();
             Random rnd = new Random();
             int psw_length = rnd.Next(min, max + 1);
-            while (sb.Length != psw_length)
+            while (!PswValidCheck(sb.ToString(), min, max))
             {
                 int ch = rnd.Next(1, 5);
                 int index = 0;
@@ -47,6 +47,10 @@ namespace WebProPswValid48
                         {
                             case 1:
                                 index = rnd.Next(33, 48);
+                                if (index == 39 || index == 34)
+                                {
+                                    index = index + 1;
+                                }
                                 sb.Append(((char)index).ToString());
                                 break;
                             case 2:
@@ -64,11 +68,6 @@ namespace WebProPswValid48
                         }
                         break;
                 }
-            }
-            if (!PswValidCheck(sb.ToString(),min,max))
-            {
-                sb = new StringBuilder();
-                sb.Append(GenNewPsw(min, max));
             }
             return sb.ToString();
         }
