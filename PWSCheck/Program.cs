@@ -29,15 +29,8 @@ namespace PSWCheck
         public void Execute(DateTime date)
         {
             UserInfo exec = new UserInfo();
-            try
-            {
                 exec.Start();
-                exec.Log("Execute Success");
-            }
-            catch (Exception ex)
-            {
-                exec.Log(ex.Message);
-            }
+                exec.Log("Execute Success",true);
         }
     }
 }

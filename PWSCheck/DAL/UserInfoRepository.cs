@@ -20,7 +20,7 @@ namespace PWSCheck.DAL
         /// <returns></returns>
         public List<User> GetUserInfo(SqlConnection conn)
         {
-            string sqlcmd = string.Format(@"Select distinct 
+            string sqlcmd = string.Format(@"SELECT DISTINCT 
      CASE  WHEN a.pa_no IS NULL
 	 THEN b.cu_sale 
 	 ELSE a.pa_no END  AS UserId,
@@ -37,7 +37,7 @@ namespace PWSCheck.DAL
 	 (a.pa_oudat =''or a.pa_oudat is null) and
 	 d.[EMAIL] is not NULL "); 
 #if DEBUG
-    sqlcmd += " and (a.dp_no = 'I0100' or pr_fname = '馬恩奇')";
+    sqlcmd += " and (a.dp_no = 'I0100' or pr_fname = '馬恩奇') and b.pr_name = '1120603' ";
 #endif
             return conn.Query<User>(sqlcmd).ToList();
         }
@@ -87,7 +87,7 @@ namespace PWSCheck.DAL
             }
             catch(Exception ex) 
             {
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message + " , User ID = " + user.UserId);
             }
         }
 
@@ -114,7 +114,7 @@ namespace PWSCheck.DAL
             }
             catch (Exception ex) 
             {
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message + " , User ID = " + user.UserId);
             }
         }
     }

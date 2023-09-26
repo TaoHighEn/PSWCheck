@@ -15,15 +15,15 @@ namespace PWSCheck.BLL
         /// Log Execute Result
         /// </summary>
         /// <param name="message">Message Need To Log</param>
-        internal void Log(string message)
+        internal void Log(string message, bool IsSucess)
         {
             using (var conn = new SqlConnection("Data Source=10.0.1.15;Initial Catalog='wpap1';Persist Security Info=True;User ID=iemis;Password=ooooo"))
             {
                 string sqlcmd = string.Format(
-                                @"INSERT INTO CommonLogList (GUID,LogMessage,CreatTime,AlertStatus) values ('{0}','{1}',GETDate(),1)",
-                                Guid.NewGuid().ToString(), message
+                                @"INSERT INTO CommonLogList (GUID,LogMessage,CreateTime,AlertStatus,ProgramName) values ('{0}','{1}',GETDate(),'{2}','PSWCheck')",
+                                Guid.NewGuid().ToString(), message, IsSucess
                                 );
-                new UserInfoRepository().Log(conn,sqlcmd);
+                new UserInfoRepository().Log(conn, sqlcmd);
             }
         }
         /// <summary>
@@ -44,14 +44,14 @@ namespace PWSCheck.BLL
                     //Mail To User
                     foreach (User user in IsInValidList)
                     {
-                        MailTo(user,conn);
-                        this.UpdateUserRecord(conn,user);
+                        MailTo(user, conn);
+                        this.UpdateUserRecord(conn, user);
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                this.Log(ex.Message, false);
             }
         }
         /// <summary>
@@ -65,13 +65,13 @@ namespace PWSCheck.BLL
             userInfoRepository.UpdateRecordList(conn, isInValidList);
         }
 
-        private void MailTo(User user,SqlConnection conn)
+        private void MailTo(User user, SqlConnection conn)
         {
             try
             {
                 SmtpClient MySMTP = new System.Net.Mail.SmtpClient("192.168.0.19");
                 MySMTP.Credentials = new NetworkCredential("itadmin", "A1@345b");
-                MySMTP.Send(Mail(user,conn));
+                MySMTP.Send(Mail(user, conn));
             }
             catch (Exception ex)
             {
@@ -84,12 +84,12 @@ namespace PWSCheck.BLL
         /// <param name="conn">DB Connection</param>
         /// <param name="user">user info</param>
         /// <exception cref="Exception"></exception>
-        private void UpdateUserRecord(SqlConnection conn,User user)
+        private void UpdateUserRecord(SqlConnection conn, User user)
         {
             try
             {
                 UserInfoRepository userInfoRepository = new UserInfoRepository();
-                userInfoRepository.UpdateUserRecord(conn,user);
+                userInfoRepository.UpdateUserRecord(conn, user);
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace PWSCheck.BLL
         /// <param name="user">User Info</param>
         /// <returns>Mail Info</returns>
         /// <exception cref="Exception"></exception>
-        private MailMessage Mail(User user,SqlConnection conn)
+        private MailMessage Mail(User user, SqlConnection conn)
         {
 
             MailMessage message = new MailMessage();
