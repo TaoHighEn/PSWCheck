@@ -21,7 +21,7 @@ namespace PWSCheck.DAL
         public List<User> GetUserInfo(SqlConnection conn)
         {
             string sqlcmd = string.Format(@"SELECT DISTINCT 
-     CASE  WHEN a.pa_no IS NULL
+     CASE WHEN a.pa_no IS NULL
 	 THEN b.cu_sale 
 	 ELSE a.pa_no END  AS UserId,
 	 b.pr_fname UserName,
@@ -33,7 +33,7 @@ namespace PWSCheck.DAL
 	 Left join iepb03h c on a.pa_no = c.cu_sale
 	 Left Join [10.10.16.13\WFSQLSERVER].[UOF].[dbo].[TB_EB_USER] d on d.ACCOUNT COLLATE Chinese_Taiwan_Stroke_CI_AS = a.pa_no OR d.[NAME] COLLATE Chinese_Taiwan_Stroke_CI_AS = b.pr_fname
      Left Join MailTime_Record e on e.[USER_ID] = a.pa_no or e.[USER_ID] = b.cu_sale
-	 where (c.pa_id2 =1  OR c.pa_id2 is NULL) AND
+	 where (c.pa_id2 =1 OR c.pa_id2 is NULL) AND
 	 (a.pa_oudat =''or a.pa_oudat is null) and
 	 d.[EMAIL] is not NULL "); 
 #if DEBUG
