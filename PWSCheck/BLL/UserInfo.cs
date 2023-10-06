@@ -124,7 +124,7 @@ namespace PWSCheck.BLL
                             2、需使用大小寫英文及數字
                             3、需使用特殊字元
                             此為第{1}次提醒，您的帳戶密碼將於第3次提醒後由系統逕行修改，並視情況通報貴單位主管。
-                            如無使用ERP需求者，無須理會此信件", user.UserName, user.MailTime + 1);
+                            [如無使用ERP需求者，無須理會此信件]", user.UserName, user.MailTime + 1);
                 }
                 else
                 {
