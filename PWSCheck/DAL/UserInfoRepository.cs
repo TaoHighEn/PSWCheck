@@ -37,7 +37,7 @@ namespace PWSCheck.DAL
 	 (a.pa_oudat =''or a.pa_oudat is null) and
 	 d.[EMAIL] is not NULL "); 
 #if DEBUG
-    sqlcmd += " and (a.dp_no = 'I0100' or pr_fname = '馬恩奇') and b.pr_name = '1120603' ";
+    //sqlcmd += " and (a.dp_no = 'I0100' or pr_fname = '馬恩奇') and b.pr_name = '1120603' ";
 #endif
             return conn.Query<User>(sqlcmd).ToList();
         }

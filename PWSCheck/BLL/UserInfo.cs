@@ -44,8 +44,11 @@ namespace PWSCheck.BLL
                     //Mail To User
                     foreach (User user in IsInValidList)
                     {
-                        MailTo(user, conn);
-                        this.UpdateUserRecord(conn, user);
+                        if (!string.IsNullOrEmpty(user.UserMail))
+                        {
+                            MailTo(user, conn);
+                            this.UpdateUserRecord(conn, user);
+                        }
                     }
                 }
             }
@@ -121,27 +124,27 @@ namespace PWSCheck.BLL
                 string pattern3 = "3、需使用特殊字元 {0}";
                 if (ptt_check[0] != "0")
                 {
-                    pattern1 = string.Format(pattern1, "Y");
+                    pattern1 = string.Format(pattern1, "(Y)");
                 }
                 else
                 {
-                    pattern1 = string.Format(pattern1, "X");
+                    pattern1 = string.Format(pattern1, "(X)");
                 }
                 if (ptt_check[1] != "0")
                 {
-                    pattern2 = string.Format(pattern2, "Y");
+                    pattern2 = string.Format(pattern2, "(Y)");
                 }
                 else
                 {
-                    pattern2 = string.Format(pattern2, "X");
+                    pattern2 = string.Format(pattern2, "(X)");
                 }
                 if (ptt_check[2] != "0")
                 {
-                    pattern3 = string.Format(pattern3, "Y");
+                    pattern3 = string.Format(pattern3, "(Y)");
                 }
                 else
                 {
-                    pattern3 = string.Format(pattern3, "X");
+                    pattern3 = string.Format(pattern3, "(X)");
                 }
                 pattern = pattern1 + "\n" + pattern2 + "\n" + pattern3;
                 if (user.MailTime < 3)
@@ -152,7 +155,7 @@ namespace PWSCheck.BLL
 密碼複雜度規範： 
 {1}
 此為第{2}次提醒，您的帳戶密碼將於第3次提醒後由系統逕行修改，並視情況通報貴單位主管。
-[如無使用ERP需求者，無須理會此信件]", 
+[如無使用ERP需求者，無須理會此信件]",
 user.UserName, pattern, user.MailTime + 1);
                 }
                 else
