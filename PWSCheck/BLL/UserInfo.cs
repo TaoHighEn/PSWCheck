@@ -114,24 +114,53 @@ namespace PWSCheck.BLL
             try
             {
                 string body = string.Empty;
-
+                string[] ptt_check = new WebProPswValid48.PswValid().PswValidCheckIso(user.Password, 8, 20);
+                string pattern = string.Empty;
+                string pattern1 = "1、密碼長度8碼~20碼字元 {0}";
+                string pattern2 = "2、需使用大小寫英文及數字 {0}";
+                string pattern3 = "3、需使用特殊字元 {0}";
+                if (ptt_check[0] != "0")
+                {
+                    pattern1 = string.Format(pattern1, "Y");
+                }
+                else
+                {
+                    pattern1 = string.Format(pattern1, "X");
+                }
+                if (ptt_check[1] != "0")
+                {
+                    pattern2 = string.Format(pattern2, "Y");
+                }
+                else
+                {
+                    pattern2 = string.Format(pattern2, "X");
+                }
+                if (ptt_check[2] != "0")
+                {
+                    pattern3 = string.Format(pattern3, "Y");
+                }
+                else
+                {
+                    pattern3 = string.Format(pattern3, "X");
+                }
+                pattern = pattern1 + "\n" + pattern2 + "\n" + pattern3;
                 if (user.MailTime < 3)
                 {
                     body = string.Format(@"敬愛的衛普同仁 {0}您好：
-                            您所使用的ERP密碼不符合密碼複雜度規範，請盡速進行修改！ 
-                            密碼複雜度規範： 
-                            1、密碼長度8碼~20碼字元 
-                            2、需使用大小寫英文及數字
-                            3、需使用特殊字元
-                            此為第{1}次提醒，您的帳戶密碼將於第3次提醒後由系統逕行修改，並視情況通報貴單位主管。
-                            [如無使用ERP需求者，無須理會此信件]", user.UserName, user.MailTime + 1);
+
+您所使用的ERP登入密碼不符合密碼複雜度規範，請盡速進行修改！ 
+密碼複雜度規範： 
+{1}
+此為第{2}次提醒，您的帳戶密碼將於第3次提醒後由系統逕行修改，並視情況通報貴單位主管。
+[如無使用ERP需求者，無須理會此信件]", 
+user.UserName, pattern, user.MailTime + 1);
                 }
                 else
                 {
                     string password = new WebProPswValid48.PswValid().GenNewPsw(8, 20);
                     new UserInfoRepository().UpdateUserPsw(conn, user, password);
                     body = string.Format(@"敬愛的衛普同仁 {0}您好：
-                            ERP複雜性密碼提醒已超過3次，系統已將您的ERP密碼修改；
+                            ERP複雜性密碼提醒已超過3次，系統已將您的ERP登入密碼修改；
                             新密碼：{1}，請盡速登入ERP修改密碼。", user.UserName, password);
                 }
                 message.Body = body;

@@ -83,5 +83,43 @@ namespace WebProPswValid48
             Regex regex = new Regex(@"^(?=.*\d)(?=.*[a-z])(?=.*\W)(?=.*[A-Z])" + ".{" + min + "," + max + "}$");
             return regex.IsMatch(c_psw);
         }
+        /// <summary>
+        /// Check Each Condition Match
+        /// </summary>
+        /// <param name="c_psw"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public string[] PswValidCheckIso(string c_psw, int min, int max)
+        {
+            string[] ptt_list = new string[3];
+            if (!(min <= c_psw.Length && c_psw.Length <= max))
+            {
+                ptt_list[0] = "0";
+            }
+            else 
+            {
+                ptt_list[0] = "1";
+            }
+            Regex regex = new Regex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])");
+            if (!regex.IsMatch(c_psw))
+            {
+                ptt_list[1] = "0";
+            }
+            else
+            {
+                ptt_list[1] = "1";
+            }
+            regex = new Regex(@"^(?=.*\W)");
+            if (!regex.IsMatch(c_psw))
+            {
+                ptt_list[2] = "0";
+            }
+            else
+            {
+                ptt_list[2] = "1";
+            }
+            return ptt_list;
+        }
     }
 }
